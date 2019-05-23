@@ -1,0 +1,16 @@
+git init 初始化
+git config --global user.name [名字 ]  全局名字
+git config -l  查看全局数据
+git config --global user.email [邮箱 ] 全局邮箱
+git status  当前文件状态
+git add [文件名] 将文件添加入栈
+git add . 将所有文件添加人栈
+git status  查看添加后的状态
+git commit -m '[注解]' 为文件添加注释
+git log 查看日志
+git log --oneline 查看简单日志
+git remote add origin [储存器网址] 连接云库
+git push origin master[节点名]  连接云库 将数据存入云库
+git pull origin master[节点名]  将数据从云库中存入本地
+git clone [网址] 从别人的云库中获取
+

@@ -1,0 +1,19 @@
+#创建标签   固定标签 name 为节点名字
+LOAD CSV WITH HEADERS  FROM "file:///Car.csv" AS line  with line
+CREATE (p:Car{title:line.Brand_branch_names,Brand_branch_hrefs:line.Brand_branch_hrefs,cars_name:line.cars_name,cars_addr:line.cars_addr}) return p
+
+LOAD CSV WITH HEADERS  FROM "file:///car_name.csv" AS line  with line
+CREATE (p:Car{title:line.cars}) return p
+
+LOAD CSV WITH HEADERS  FROM "file:///labels.csv" AS line  with line
+CREATE (p:Car{title:line.brand}) return p
+
+match (n) return count(n)
+
+LOAD CSV WITH HEADERS  FROM "file:///Car_secc.csv" AS line  with line
+CREATE (p:PD{title:line.name,detail:line.detail,image_url:line.image_url,baseInfoValueList:line.baseInfoValueList,baseInfoKeyList:line.baseInfoKeyList}) return p
+
+
+LOAD CSV  WITH HEADERS FROM "file:///relation_brand_car.xlsx" AS line
+MATCH (entity1:Brand{title:line.Brand_branch_names}) , (entity2:NewNode{title:line.cars_name})
+CREATE (entity1)-[:RELATION { type: line.Relation }]->(entity2)

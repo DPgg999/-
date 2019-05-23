@@ -1,0 +1,30 @@
+#创建标签   固定标签 title为所有的车名字
+LOAD CSV WITH HEADERS  FROM "file:///Car.csv" AS line  with line
+CREATE (p:Car{title:line.cars_name,Brand_branch_hrefs:line.Brand_branch_hrefs,cars_name:line.Brand_branch_names,cars_addr:line.cars_addr}) return p
+
+#将所有的车名字导入
+LOAD CSV WITH HEADERS  FROM "file:///car_name.csv" AS line  with line
+CREATE (p:allbrand{title:line.cars}) return p
+
+#将车品牌的名字导入
+LOAD CSV WITH HEADERS  FROM "file:///labels.csv" AS line  with line
+CREATE (p:brand{title:line.brand}) return p
+
+#寻找所有节点
+match (n) return count(n)
+
+#将所有车型和品牌连接关系
+MATCH (e:Car),(cc:brand) 
+WHERE e.cars_name = cc.title
+CREATE (e)-[r:relaticon ]->(cc)
+
+
+#导入详情数据
+LOAD CSV WITH HEADERS  FROM "file:///detail.csv" AS line  with line
+CREATE (p:detail{title:line.title,prices:line.prices,imgs:line.imgs,href:line.href,Carpower:line.Carpower}) return p
+
+
+#导入详情关系
+MATCH (e:Car),(cc:detail) 
+WHERE e.title = cc.title
+CREATE (e)<-[p:details]-(cc)
